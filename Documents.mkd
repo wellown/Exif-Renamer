@@ -1,0 +1,89 @@
+# 软件设计说明
+
+Exif Renamer 使用AutoIT 3.3.12.0 为基础编写，使用Koda进行UI设计。
+
+# 编码规范
+
+## 变量命名
+
+1. 全局变量使用字母g开头，使用CAMEL格式为每个变量命名
+2. 局部变量使用字母l开头，使用CAMEL格式为每个变量命名
+
+## 函数命名
+
+1. 函数命名以大写字母开头
+2. 对由本程序自定义的函数，使用“ER”开头，使用CAMEL格式为函数命名。
+3. 对于外部引用的函数（如各类UDF中的函数）使用“_”开头。
+
+## 控件命名
+
+# 变量设计
+
+## gFileLocation
+
+存放用户选定的文件存放位置。该变量由ER_Init变量进行初始化， _FileSelectFolder函数赋值。其他函数仅作读取使用。
+
+## gRenamingData
+
+存放用户选定文件存放目录中所有照片文件的改名预览数据。数据类型为二维数组。定义为：
+```
+	gRenamingData[01][0]:文件ID，一般来说是文件在目录中读取的序列号
+	gRenamingData[0][1]:原始文件名
+	gRenamingData[0][2]:照片拍摄日期
+	gRenamingData[0][3]:目标文件名预览
+	gRenamingData[n][n]:...
+```
+
+# 函数设计
+
+## ER_init
+
+初始化相关全局变量。清除各个全局变量的内容，为下一次使用做准备。同时初始化各个界面控件的内容。
+
+参数：无
+
+返回值：无
+
+## _FileSelectFolder
+
+该函数来自于AutoIT论坛中用户分享的代码片段（http://www.autoitscript.com/forum/topic/161098-can-you-please-test-my-custom-fileselectfolder-on-your-system ）
+
+提供界面供用户选取照片存放的目录位置。为了实现功能，我对代码进行了调整。
+
+参数：
+	$Title: 可选。弹出的目录选择窗口的标题。默认为“”
+	$Text:  可选。弹出窗口中的提示语，可用于帮助用户使用弹出的窗口。默认为“”
+	$InstallDir: 可选。当需要为安装程序选择目录时，自动附加于用户选定目录后的目录名。默认为“”
+	$DefaultDir: 可选。当该参数传入时，弹出窗口的Input控件中自动输入该默认目录位置。 默认为“”
+
+返回值：
+	0： 如果用户取消目录选择或直接关闭该窗体，则函数返回0
+	Path String：当用户点击“确定”时以“字符串”形式返回用户选定的有效目录位置。
+
+## ER_genData
+
+读取目录中的照片文件（JPG或JPEG格式），并调用`ER_updateDestFileName`生成改名预览数据。该数据可供后续更新ListView控件内容使用。本函数仅进行内存数据的操作。
+
+参数：无
+
+返回值：无
+
+## ER_updateDestFileName
+
+根据从目录中照片文件中提取的拍摄日期等信息，生成目标文件名。
+
+参数：无
+
+返回值：无
+
+## ER_updateListView
+
+将改名预览数据显示到ListView中。供用户预览改名结果。
+
+参数：无
+
+返回值：无
+
+## ER_Execute
+
+以文件为单位执行改名操作。
