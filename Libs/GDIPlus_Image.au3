@@ -509,7 +509,7 @@ Func _GDIPlus_ImageGetPropertyItem($hImage, $iPropID)
 		Return -1
 	EndIf
 
-	ConsoleWrite("====iPropID is " & $iPropID & "====" & "Prop Lengti is " & $iBuffer & "====" & @CRLF )
+	;ConsoleWrite("====iPropID is " & $iPropID & "====" & "Prop Lengti is " & $iBuffer & "====" & @CRLF )
 	$tBuffer = DllStructCreate("byte[" & $iBuffer & "]")
 	$pBuffer = DllStructGetPtr($tBuffer)
 	$aResult = DllCall($__g_hGDIPDll, "uint", "GdipGetPropertyItem", "hwnd", $hImage, "int", $iPropID, "uint", $iBuffer, "ptr", $pBuffer)
@@ -526,7 +526,7 @@ Func _GDIPlus_ImageGetPropertyItem($hImage, $iPropID)
 
 	$Struct_String = DllStructCreate("CHAR[" & DllStructGetData($tPropertyItem, "length") & "];", DllStructGetData($tPropertyItem, "value") )
     $vPhotoDate = DllStructGetData($Struct_String, 1)
-	ConsoleWrite( @CRLF & "ErrorCODE is " & $GDIP_ERROR & " vPhotoDateStruct id is " & DllStructGetData($tPropertyItem, "id") & @CRLF  & " type is " & DllStructGetData($tPropertyItem, "type") &@CRLF & " length is " & DllStructGetData($tPropertyItem, "length") & @CRLF & "value is " & DllStructGetData($tPropertyItem, "value") & @CRLF & " date is " & $vPhotoDate &@CRLF )
+	;ConsoleWrite( @CRLF & "ErrorCODE is " & $GDIP_ERROR & " vPhotoDateStruct id is " & DllStructGetData($tPropertyItem, "id") & @CRLF  & " type is " & DllStructGetData($tPropertyItem, "type") &@CRLF & " length is " & DllStructGetData($tPropertyItem, "length") & @CRLF & "value is " & DllStructGetData($tPropertyItem, "value") & @CRLF & " date is " & $vPhotoDate &@CRLF )
 	Return $tPropertyItem
 	;Return $_retvalue
 EndFunc   ;==>_GDIPlus_ImageGetPropertyItem
