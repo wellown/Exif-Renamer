@@ -58,9 +58,7 @@ Global $idButtonPreview = GUICtrlCreateButton("预 览", 415, 61, 86, 86)
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 
-Local $aFileList
-Local $file
-Local $gFileLocation = ""
+
 ;_DebugSetup("debug exif renamer", True)
 
 
@@ -104,7 +102,7 @@ While 1
 			ER_updateDestFilename()
 			ER_updateListView()
 		Case $idButtonExecute
-			;判断$aFileList的有效性：已处理过，相关数据已失效
+
 			If $gFileCount == 0 Then
 				ConsoleWrite("Nothing to be processed" & @CRLF)
 				ContinueLoop
